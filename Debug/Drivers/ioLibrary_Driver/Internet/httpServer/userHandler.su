@@ -1,0 +1,4 @@
+../Drivers/ioLibrary_Driver/Internet/httpServer/userHandler.c:36:9:predefined_get_cgi_processor	32	static
+../Drivers/ioLibrary_Driver/Internet/httpServer/userHandler.c:61:9:predefined_set_cgi_processor	32	static
+../Drivers/ioLibrary_Driver/Internet/httpServer/userHandler.c:89:6:make_json_netinfo	160	static
+../Drivers/ioLibrary_Driver/Internet/httpServer/userHandler.c:111:8:set_diostate	24	static

@@ -1,0 +1,6 @@
+../Core/Src/wizchip.c:5:13:w5500_select	8	static
+../Core/Src/wizchip.c:10:13:w5500_unselect	8	static
+../Core/Src/wizchip.c:15:16:w5500_read_byte	16	static
+../Core/Src/wizchip.c:22:13:w5500_write_byte	16	static
+../Core/Src/wizchip.c:27:13:w5500_hw_reset	8	static
+../Core/Src/wizchip.c:35:6:w5500_init	40	static

@@ -1,0 +1,4 @@
+../Core/Src/tcp.c:53:10:tcp_server_init	16	static
+../Core/Src/tcp.c:64:10:tcp_client_check	16	static
+../Core/Src/tcp.c:73:10:tcp_send_msg	16	static
+../Core/Src/tcp.c:81:10:tcp_disconnect	16	static
