@@ -32,8 +32,32 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
  ../Core/Inc/wizchip.h ../Core/Inc/main.h \
- C:/Users/u67/Documents/cubeide_v1.9/mbedtls_test/Drivers/ioLibrary_Driver/Ethernet/wizchip_conf.h \
- C:/Users/u67/Documents/cubeide_v1.9/mbedtls_test/Drivers/ioLibrary_Driver/Ethernet/W5500/w5500.h
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/ioLibrary_Driver/Ethernet/wizchip_conf.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/ioLibrary_Driver/Ethernet/W5500/w5500.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/SSLInterface.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/config.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/check_config.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/ssl.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/config.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/bignum.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/ecp.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/ssl_ciphersuites.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/pk.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/md.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/rsa.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/cipher.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/x509_crt.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/x509.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/asn1.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/x509_crl.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/entropy.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/sha256.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/ctr_drbg.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/aes.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/compat-1.3.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/debug.h \
+ C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/ssl.h \
+ ../Core/Inc/HexTrans.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
@@ -69,5 +93,29 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 ../Core/Inc/wizchip.h:
 ../Core/Inc/main.h:
-C:/Users/u67/Documents/cubeide_v1.9/mbedtls_test/Drivers/ioLibrary_Driver/Ethernet/wizchip_conf.h:
-C:/Users/u67/Documents/cubeide_v1.9/mbedtls_test/Drivers/ioLibrary_Driver/Ethernet/W5500/w5500.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/ioLibrary_Driver/Ethernet/wizchip_conf.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/ioLibrary_Driver/Ethernet/W5500/w5500.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/SSLInterface.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/config.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/check_config.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/ssl.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/config.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/bignum.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/ecp.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/ssl_ciphersuites.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/pk.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/md.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/rsa.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/cipher.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/x509_crt.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/x509.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/asn1.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/x509_crl.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/entropy.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/sha256.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/ctr_drbg.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/aes.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/compat-1.3.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/debug.h:
+C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/TLS/mbedtls/include/mbedtls/ssl.h:
+../Core/Inc/HexTrans.h:

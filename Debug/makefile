@@ -14,6 +14,8 @@ RM := rm -rf
 -include Drivers/ioLibrary_Driver/Ethernet/subdir.mk
 -include Drivers/ioLibrary_Driver/Application/multicast/subdir.mk
 -include Drivers/ioLibrary_Driver/Application/loopback/subdir.mk
+-include Drivers/TLS/mbedtls/library/subdir.mk
+-include Drivers/TLS/subdir.mk
 -include Drivers/STM32F4xx_HAL_Driver/Src/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
@@ -65,8 +67,8 @@ all: main-build
 main-build: mbedtls_test.elf secondary-outputs
 
 # Tool invocations
-mbedtls_test.elf mbedtls_test.map: $(OBJS) $(USER_OBJS) C:\Users\u67\Documents\cubeide_v1.9\mbedtls_test\STM32F407VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "mbedtls_test.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\u67\Documents\cubeide_v1.9\mbedtls_test\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="mbedtls_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+mbedtls_test.elf mbedtls_test.map: $(OBJS) $(USER_OBJS) C:\Users\User\Documents\CubeIDE_projects\mbedtls-test\STM32F407VGTX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "mbedtls_test.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\User\Documents\CubeIDE_projects\mbedtls-test\STM32F407VGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="mbedtls_test.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

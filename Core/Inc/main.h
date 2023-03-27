@@ -69,8 +69,6 @@ void Error_Handler(void);
 #define PH1_OSC_OUT_GPIO_Port GPIOH
 #define OTG_FS_PowerSwitchOn_Pin GPIO_PIN_0
 #define OTG_FS_PowerSwitchOn_GPIO_Port GPIOC
-#define W5500_RST_Pin GPIO_PIN_1
-#define W5500_RST_GPIO_Port GPIOC
 #define W5500_MISO_Pin GPIO_PIN_2
 #define W5500_MISO_GPIO_Port GPIOC
 #define PDM_OUT_Pin GPIO_PIN_3
@@ -93,10 +91,12 @@ void Error_Handler(void);
 #define BOOT1_GPIO_Port GPIOB
 #define CLK_IN_Pin GPIO_PIN_10
 #define CLK_IN_GPIO_Port GPIOB
+#define W5500_CS_Pin GPIO_PIN_12
+#define W5500_CS_GPIO_Port GPIOB
 #define W5500_SCK_Pin GPIO_PIN_13
 #define W5500_SCK_GPIO_Port GPIOB
-#define W5500_CS_Pin GPIO_PIN_14
-#define W5500_CS_GPIO_Port GPIOB
+#define W5500_RST_Pin GPIO_PIN_14
+#define W5500_RST_GPIO_Port GPIOB
 #define W5500_MOSI_Pin GPIO_PIN_15
 #define W5500_MOSI_GPIO_Port GPIOB
 #define LD4_Pin GPIO_PIN_12

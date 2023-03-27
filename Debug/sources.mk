@@ -24,6 +24,8 @@ SUBDIRS := \
 Core/Src \
 Core/Startup \
 Drivers/STM32F4xx_HAL_Driver/Src \
+Drivers/TLS \
+Drivers/TLS/mbedtls/library \
 Drivers/ioLibrary_Driver/Application/loopback \
 Drivers/ioLibrary_Driver/Application/multicast \
 Drivers/ioLibrary_Driver/Ethernet/W5500 \

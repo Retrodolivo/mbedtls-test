@@ -23,6 +23,8 @@
 /* USER CODE BEGIN Includes */
 #include "wizchip.h"
 #include "stdio.h"
+#include "SSLInterface.h"
+#include "HexTrans.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -32,6 +34,8 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+#define ETH_MAX_BUF_SIZE	2048
+#define SERVER_PORT			8883
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -52,7 +56,12 @@ SPI_HandleTypeDef hspi2;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-
+unsigned char gServer_IP[4] = {192,168,1,45};
+//unsigned char gServer_IP[4] = {222,98,173,239};
+//unsigned char gServer_IP[4] = {222,98,173,230};
+//unsigned char gServer_IP[4] = {192,168,0,230};
+unsigned char ethBuf0[ETH_MAX_BUF_SIZE];
+uint8_t rxData[2];
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -89,7 +98,9 @@ w5500chip_t w5500;
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+  int len, server_fd = 0;
+  unsigned int ret = 0;
+  wiz_tls_context tlsContext;
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -117,8 +128,16 @@ int main(void)
   MX_SPI2_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
+  printf("Hello! MBED TLS System \r\n");
   w5500_init(&w5500);
+  printf("version:%.2x\r\n", getVERSIONR());
   print_network_information();
+  /*  initialize ssl context  */
+  ret = wiz_tls_init(&tlsContext, &server_fd);
+  printf("init [%d] \r\n", ret);
+
+  /*  Connect to the ssl server  */
+  wiz_tls_connect(&tlsContext, SERVER_PORT, gServer_IP);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -332,7 +351,7 @@ static void MX_SPI2_Init(void)
   hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
   hspi2.Init.NSS = SPI_NSS_SOFT;
-  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_64;
+  hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_16;
   hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
   hspi2.Init.CRCCalculation = SPI_CRCCALCULATION_DISABLE;
@@ -401,10 +420,10 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(CS_I2C_SPI_GPIO_Port, CS_I2C_SPI_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, OTG_FS_PowerSwitchOn_Pin|W5500_RST_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(OTG_FS_PowerSwitchOn_GPIO_Port, OTG_FS_PowerSwitchOn_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(W5500_CS_GPIO_Port, W5500_CS_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOB, W5500_CS_Pin|W5500_RST_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, LD4_Pin|LD3_Pin|LD5_Pin|LD6_Pin
@@ -417,12 +436,12 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(CS_I2C_SPI_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : OTG_FS_PowerSwitchOn_Pin W5500_RST_Pin */
-  GPIO_InitStruct.Pin = OTG_FS_PowerSwitchOn_Pin|W5500_RST_Pin;
+  /*Configure GPIO pin : OTG_FS_PowerSwitchOn_Pin */
+  GPIO_InitStruct.Pin = OTG_FS_PowerSwitchOn_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+  HAL_GPIO_Init(OTG_FS_PowerSwitchOn_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pin : PDM_OUT_Pin */
   GPIO_InitStruct.Pin = PDM_OUT_Pin;
@@ -458,6 +477,13 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(W5500_CS_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pin : W5500_RST_Pin */
+  GPIO_InitStruct.Pin = W5500_RST_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(W5500_RST_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : LD4_Pin LD3_Pin LD5_Pin LD6_Pin
                            Audio_RST_Pin */
