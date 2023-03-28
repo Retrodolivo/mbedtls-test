@@ -25,6 +25,7 @@
 #include "stdio.h"
 #include "SSLInterface.h"
 #include "HexTrans.h"
+#include "http_client.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -35,7 +36,7 @@
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
 #define ETH_MAX_BUF_SIZE	2048
-#define SERVER_PORT			8883
+#define SERVER_PORT			4443
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -56,7 +57,7 @@ SPI_HandleTypeDef hspi2;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-unsigned char gServer_IP[4] = {192,168,1,45};
+unsigned char gServer_IP[4] = {192,168,0,116};
 //unsigned char gServer_IP[4] = {222,98,173,239};
 //unsigned char gServer_IP[4] = {222,98,173,230};
 //unsigned char gServer_IP[4] = {192,168,0,230};
@@ -89,6 +90,20 @@ int _write(int fd, char *str, int len)
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 w5500chip_t w5500;
+
+uint8_t Domain_IP[4]  = {192, 168, 0, 116};                  // Translated IP address by DNS Server
+//uint8_t Domain_name[] = "www.kma.go.kr";
+//uint8_t URI[] = "/wid/queryDFSRSS.jsp?zone=4113552000";
+uint8_t Domain_name[] = "192.168.0.116";
+uint8_t URI[] = "/index.html";
+uint8_t flag_sent_http_request = DISABLE;
+
+uint8_t g_send_buf[DATA_BUF_SIZE];
+uint8_t g_recv_buf[DATA_BUF_SIZE];
+
+uint8_t data_buf [DATA_BUF_SIZE]; // TX Buffer for applications
+//uint8_t fl_buf[] = "hello";
+//uint8_t fl_sector[4096] = {0,};
 /* USER CODE END 0 */
 
 /**
@@ -128,16 +143,17 @@ int main(void)
   MX_SPI2_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-  printf("Hello! MBED TLS System \r\n");
   w5500_init(&w5500);
-  printf("version:%.2x\r\n", getVERSIONR());
   print_network_information();
+  httpc_init(0, Domain_IP, 12041, g_send_buf, g_recv_buf);
   /*  initialize ssl context  */
-  ret = wiz_tls_init(&tlsContext, &server_fd);
-  printf("init [%d] \r\n", ret);
-
-  /*  Connect to the ssl server  */
-  wiz_tls_connect(&tlsContext, SERVER_PORT, gServer_IP);
+//  printf("FIRST: %d\n", HAL_GetTick());
+//  ret = wiz_tls_init(&tlsContext, &server_fd);
+//  printf("init [%d] \r\n", ret);
+//
+//  /*  Connect to the ssl server  */
+//  wiz_tls_connect(&tlsContext, SERVER_PORT, gServer_IP);
+//  printf("SECOND: %d\n", HAL_GetTick());
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -147,6 +163,53 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+	  httpc_connection_handler();
+	  if(httpc_isSockOpen)
+	  {
+		  httpc_connect();
+	  }
+	  // HTTP client example
+	  if(httpc_isConnected)
+	  {
+		  // Send: HTTP request
+		  request.method = (uint8_t *)HTTP_GET;
+		  request.uri = (uint8_t *)URI;
+		  request.host = (uint8_t *)Domain_name;
+
+		  // HTTP client example #1: Function for send HTTP request (header and body fields are integrated)
+		  {
+			  httpc_send(&request, g_recv_buf, g_send_buf, 0);
+		  }
+
+		  // HTTP client example #2: Separate functions for HTTP request - default header + body
+		  {
+			  //httpc_send_header(&request, g_recv_buf, NULL, len);
+			  //httpc_send_body(g_send_buf, len); // Send HTTP requset message body
+		  }
+
+		  // HTTP client example #3: Separate functions for HTTP request with custom header fields - default header + custom header + body
+		  {
+			  //httpc_add_customHeader_field(tmpbuf, "Custom-Auth", "auth_method_string"); // custom header field extended - example #1
+			  //httpc_add_customHeader_field(tmpbuf, "Key", "auth_key_string"); // custom header field extended - example #2
+			  //httpc_send_header(&request, g_recv_buf, tmpbuf, len);
+			  //httpc_send_body(g_send_buf, len);
+		  }
+
+		  flag_sent_http_request = ENABLE;
+	  }
+	  // Recv: HTTP response
+	  if(httpc_isReceived > 0)
+	  {
+		  len = httpc_recv(g_recv_buf, httpc_isReceived);
+
+		  printf(" >> HTTP Response - Received len: %d\r\n", len);
+		  printf("======================================================\r\n");
+		  for(int i = 0; i < len; i++)
+			  printf("%c", g_recv_buf[i]);
+		  printf("\r\n");
+		  printf("======================================================\r\n");
+	  }
+	  HAL_Delay(1000);
   }
   /* USER CODE END 3 */
 }

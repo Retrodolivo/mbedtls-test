@@ -4,8 +4,8 @@ Drivers/ioLibrary_Driver/Internet/httpServer/userHandler.o: \
  ../Drivers/ioLibrary_Driver/Internet/httpServer/httpServer.h \
  ../Drivers/ioLibrary_Driver/Internet/httpServer/httpParser.h \
  ../Drivers/ioLibrary_Driver/Internet/httpServer/userHandler.h \
- C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/ioLibrary_Driver/Ethernet/wizchip_conf.h \
- C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/ioLibrary_Driver/Ethernet/W5500/w5500.h \
+ C:/Users/u67/Documents/cubeide_v1.9/mbedtls_test/Drivers/ioLibrary_Driver/Ethernet/wizchip_conf.h \
+ C:/Users/u67/Documents/cubeide_v1.9/mbedtls_test/Drivers/ioLibrary_Driver/Ethernet/W5500/w5500.h \
  ../Core/Inc/main.h ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
  ../Core/Inc/stm32f4xx_hal_conf.h \
  ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
@@ -42,8 +42,8 @@ Drivers/ioLibrary_Driver/Internet/httpServer/userHandler.o: \
 ../Drivers/ioLibrary_Driver/Internet/httpServer/httpServer.h:
 ../Drivers/ioLibrary_Driver/Internet/httpServer/httpParser.h:
 ../Drivers/ioLibrary_Driver/Internet/httpServer/userHandler.h:
-C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/ioLibrary_Driver/Ethernet/wizchip_conf.h:
-C:/Users/User/Documents/CubeIDE_projects/mbedtls-test/Drivers/ioLibrary_Driver/Ethernet/W5500/w5500.h:
+C:/Users/u67/Documents/cubeide_v1.9/mbedtls_test/Drivers/ioLibrary_Driver/Ethernet/wizchip_conf.h:
+C:/Users/u67/Documents/cubeide_v1.9/mbedtls_test/Drivers/ioLibrary_Driver/Ethernet/W5500/w5500.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h:
 ../Core/Inc/stm32f4xx_hal_conf.h:
