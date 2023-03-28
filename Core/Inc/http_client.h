@@ -2,7 +2,7 @@
 #define HTTPCLIENT_H_
 
 #include <stdint.h>
-
+#include "SSLInterface.h"
 
 // HTTP client debug message enable
 #define _HTTPCLIENT_DEBUG_
@@ -89,15 +89,15 @@ extern HttpRequest request;
 uint8_t  httpc_connection_handler(); // HTTP client socket handler - for main loop, implemented in polling
 
 uint8_t  httpc_init(uint8_t sock, uint8_t * ip, uint16_t port, uint8_t * sbuf, uint8_t * rbuf); // HTTP client initialize
-uint8_t  httpc_connect(); // HTTP client connect (after HTTP socket opened)
+uint8_t httpc_connect(wiz_tls_context* tlsContext); // HTTP client connect (after HTTP socket opened)
 uint8_t  httpc_disconnect(void);
 
 uint16_t httpc_add_customHeader_field(uint8_t * customHeader_buf, const char * name, const char * value); // Function for adding custom header fields (httpc_send_header() function only)
 uint16_t httpc_send_header(HttpRequest * req, uint8_t * buf, uint8_t * customHeader_buf, uint16_t content_len); // Send the HTTP header only
 uint16_t httpc_send_body(uint8_t * buf, uint16_t len); // Send the HTTP body only (have to send http request body after header sent)
-uint16_t httpc_send(HttpRequest * req, uint8_t * buf, uint8_t * body, uint16_t content_len); // Send the HTTP header and body
+uint16_t httpc_send(wiz_tls_context* tlsContext, HttpRequest * req, uint8_t * buf, uint8_t * body, uint16_t content_len); // Send the HTTP header and body
 
-uint16_t httpc_recv(uint8_t * buf, uint16_t len); // Receive the HTTP response header and body, User have to parse the received messages depending on needs
+uint16_t httpc_recv(wiz_tls_context* tlsContext, uint8_t * buf, uint16_t len); // Receive the HTTP response header and body, User have to parse the received messages depending on needs
 
 
 #endif /* HTTPCLIENT_H_ */

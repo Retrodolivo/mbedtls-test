@@ -6,6 +6,7 @@
 #include "socket.h"
 #include "http_client.h"
 
+
 /* Private define ------------------------------------------------------------*/
 
 /* Private variables ---------------------------------------------------------*/
@@ -131,7 +132,7 @@ uint8_t httpc_connection_handler()
 
 
 // return: socket status
-uint8_t httpc_connect()
+uint8_t httpc_connect(wiz_tls_context* tlsContext)
 {
 	uint8_t ret = HTTPC_FALSE;
 
@@ -140,7 +141,7 @@ uint8_t httpc_connect()
 		if(httpc_isSockOpen == HTTPC_TRUE)
 		{
 			// TCP connect
-			ret = connect(httpsock, dest_ip, dest_port);
+			ret = wiz_tls_connect(tlsContext, dest_port, dest_ip);//connect(httpsock, dest_ip, dest_port);
 			if(ret == SOCK_OK) ret = HTTPC_TRUE;
 		}
 	}
@@ -256,7 +257,7 @@ uint16_t httpc_send_body(uint8_t * buf, uint16_t len)
 
 
 // return: sent data length
-uint16_t httpc_send(HttpRequest * req, uint8_t * buf, uint8_t * body, uint16_t content_len)
+uint16_t httpc_send(wiz_tls_context* tlsContext, HttpRequest * req, uint8_t * buf, uint8_t * body, uint16_t content_len)
 {
 	uint16_t i;
 	uint16_t len;
@@ -311,7 +312,7 @@ uint16_t httpc_send(HttpRequest * req, uint8_t * buf, uint8_t * body, uint16_t c
 		for(i = 0; i < len; i++) printf("%c", buf[i]);
 		printf("\r\n");
 //#endif
-		send(httpsock, buf, len);
+		wiz_tls_write(tlsContext, buf, len);//send(httpsock, buf, len);
 	}
 	else
 	{
@@ -323,14 +324,14 @@ uint16_t httpc_send(HttpRequest * req, uint8_t * buf, uint8_t * body, uint16_t c
 
 
 // return: received data length
-uint16_t httpc_recv(uint8_t * buf, uint16_t len)
+uint16_t httpc_recv(wiz_tls_context* tlsContext, uint8_t * buf, uint16_t len)
 {
 	uint16_t recvlen;
 
 	if(httpc_isConnected == HTTPC_TRUE)
 	{
 		if(len > DATA_BUF_SIZE) len = DATA_BUF_SIZE;
-		recvlen = recv(httpsock, buf, len);
+		recvlen = wiz_tls_read(tlsContext, buf, len);//recv(httpsock, buf, len);
 	}
 	else
 	{

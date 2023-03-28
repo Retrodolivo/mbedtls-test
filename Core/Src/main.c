@@ -145,10 +145,10 @@ int main(void)
   /* USER CODE BEGIN 2 */
   w5500_init(&w5500);
   print_network_information();
-  httpc_init(0, Domain_IP, 12041, g_send_buf, g_recv_buf);
+  httpc_init(0, Domain_IP, 4443, g_send_buf, g_recv_buf);
   /*  initialize ssl context  */
 //  printf("FIRST: %d\n", HAL_GetTick());
-//  ret = wiz_tls_init(&tlsContext, &server_fd);
+  ret = wiz_tls_init(&tlsContext, &server_fd);
 //  printf("init [%d] \r\n", ret);
 //
 //  /*  Connect to the ssl server  */
@@ -166,7 +166,7 @@ int main(void)
 	  httpc_connection_handler();
 	  if(httpc_isSockOpen)
 	  {
-		  httpc_connect();
+		  httpc_connect(&tlsContext);
 	  }
 	  // HTTP client example
 	  if(httpc_isConnected)
@@ -178,7 +178,7 @@ int main(void)
 
 		  // HTTP client example #1: Function for send HTTP request (header and body fields are integrated)
 		  {
-			  httpc_send(&request, g_recv_buf, g_send_buf, 0);
+			  httpc_send(&tlsContext, &request, g_recv_buf, g_send_buf, 0);
 		  }
 
 		  // HTTP client example #2: Separate functions for HTTP request - default header + body
@@ -200,7 +200,7 @@ int main(void)
 	  // Recv: HTTP response
 	  if(httpc_isReceived > 0)
 	  {
-		  len = httpc_recv(g_recv_buf, httpc_isReceived);
+		  len = httpc_recv(&tlsContext, g_recv_buf, httpc_isReceived);
 
 		  printf(" >> HTTP Response - Received len: %d\r\n", len);
 		  printf("======================================================\r\n");
@@ -209,7 +209,7 @@ int main(void)
 		  printf("\r\n");
 		  printf("======================================================\r\n");
 	  }
-	  HAL_Delay(1000);
+	  HAL_Delay(2000);
   }
   /* USER CODE END 3 */
 }
