@@ -51,7 +51,7 @@ void w5500_init(w5500chip_t *chip)
 	uint8_t mac[6] = {0x00, 0x08, 0xdc, 0xab, 0xcd, 0xef};
 	memcpy(chip->netinfo.mac, mac, 6);
 
-	uint8_t ip[4] = {192, 168, 0, 3};
+	uint8_t ip[4] = {192, 168, 1, 200};
 	memcpy(chip->netinfo.ip, ip, 4);
 
 	/*setting subnet mask*/

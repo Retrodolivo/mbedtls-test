@@ -74,7 +74,7 @@
 
 #define MBEDTLS_KEY_EXCHANGE_RSA_ENABLED        //
 //#define MBEDTLS_KEY_EXCHANGE_RSA_PSK_ENABLED   //
-#define MBEDTLS_GCM_C    //AES in GCM mode£¬base on parallel design£¬therefore it can good performance on speed,cost and less delay
+#define MBEDTLS_GCM_C    //AES in GCM modeï¿½ï¿½base on parallel designï¿½ï¿½therefore it can good performance on speed,cost and less delay
 //#define MBEDTLS_CCM_C    //
 
 //define encryption and discrete methods
@@ -85,7 +85,7 @@
         //MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
 		//MBEDTLS_TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
 //Save RAM 
-#define MBEDTLS_MPI_MAX_SIZE   256
+#define MBEDTLS_MPI_MAX_SIZE   1024
 #define MBEDTLS_ENTROPY_MAX_SOURCES   10
 
 //#define SSL_MAX_CONTENT_LEN    4096

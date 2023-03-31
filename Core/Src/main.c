@@ -57,6 +57,7 @@ SPI_HandleTypeDef hspi2;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
+//unsigned char gServer_IP[4] = {8,8,8,8};
 unsigned char gServer_IP[4] = {192,168,0,116};
 //unsigned char gServer_IP[4] = {222,98,173,239};
 //unsigned char gServer_IP[4] = {222,98,173,230};
@@ -92,6 +93,7 @@ int _write(int fd, char *str, int len)
 w5500chip_t w5500;
 
 uint8_t Domain_IP[4]  = {192, 168, 0, 116};                  // Translated IP address by DNS Server
+//uint8_t Domain_IP[4]  = {8, 8, 8, 8};                  // Translated IP address by DNS Server
 //uint8_t Domain_name[] = "www.kma.go.kr";
 //uint8_t URI[] = "/wid/queryDFSRSS.jsp?zone=4113552000";
 uint8_t Domain_name[] = "192.168.0.116";
@@ -145,15 +147,21 @@ int main(void)
   /* USER CODE BEGIN 2 */
   w5500_init(&w5500);
   print_network_information();
-  httpc_init(0, Domain_IP, 4443, g_send_buf, g_recv_buf);
   /*  initialize ssl context  */
-//  printf("FIRST: %d\n", HAL_GetTick());
   ret = wiz_tls_init(&tlsContext, &server_fd);
-//  printf("init [%d] \r\n", ret);
-//
-//  /*  Connect to the ssl server  */
-//  wiz_tls_connect(&tlsContext, SERVER_PORT, gServer_IP);
-//  printf("SECOND: %d\n", HAL_GetTick());
+//  httpc_init(0, Domain_IP, 4443, g_send_buf, g_recv_buf);
+
+//  httpc_connection_handler();
+//  if(httpc_isSockOpen)
+//  {
+//	  httpc_connect(&tlsContext);
+//  }
+//  httpc_connection_handler();
+//  httpc_connect(&tlsContext);
+
+  /*  Connect to the ssl server  */
+  wiz_tls_connect(&tlsContext, SERVER_PORT, gServer_IP);
+  printf("connect end \r\n");
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -163,56 +171,99 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	  httpc_connection_handler();
-	  if(httpc_isSockOpen)
-	  {
-		  httpc_connect(&tlsContext);
-	  }
-	  // HTTP client example
-	  if(httpc_isConnected)
-	  {
-		  // Send: HTTP request
-		  request.method = (uint8_t *)HTTP_GET;
-		  request.uri = (uint8_t *)URI;
-		  request.host = (uint8_t *)Domain_name;
+#if 0
+	loopback_tcps(0, data_buf, 5000, AS_IPV6);
+	loopback_tcps(1, data_buf, 5001, AS_IPV4);
+#endif
 
-		  // HTTP client example #1: Function for send HTTP request (header and body fields are integrated)
-		  {
-			  httpc_send(&tlsContext, &request, g_recv_buf, g_send_buf, 0);
-		  }
 
-		  // HTTP client example #2: Separate functions for HTTP request - default header + body
-		  {
-			  //httpc_send_header(&request, g_recv_buf, NULL, len);
-			  //httpc_send_body(g_send_buf, len); // Send HTTP requset message body
-		  }
 
-		  // HTTP client example #3: Separate functions for HTTP request with custom header fields - default header + custom header + body
-		  {
-			  //httpc_add_customHeader_field(tmpbuf, "Custom-Auth", "auth_method_string"); // custom header field extended - example #1
-			  //httpc_add_customHeader_field(tmpbuf, "Key", "auth_key_string"); // custom header field extended - example #2
-			  //httpc_send_header(&request, g_recv_buf, tmpbuf, len);
-			  //httpc_send_body(g_send_buf, len);
-		  }
+//		printf("%s : %d \r\n", ethBuf0, len);
+		char get[] = "GET /index.html HTTP/1.1\r\nHost: 192.168.0.116\r\n";
+		/*  Write data to the SSL channel  */
+		wiz_tls_write(&tlsContext, get, strlen(get));
+		if(len > 0)
+		{
+			len = wiz_tls_read(&tlsContext, ethBuf0, ETH_MAX_BUF_SIZE);
+		/*  Send close notify  */
+		if(wiz_tls_close_notify(&tlsContext) == 0)
+			printf("SSL closed\r\n");
 
-		  flag_sent_http_request = ENABLE;
-	  }
-	  // Recv: HTTP response
-	  if(httpc_isReceived > 0)
-	  {
-		  len = httpc_recv(&tlsContext, g_recv_buf, httpc_isReceived);
+		/*  Free tls context  */
+		wiz_tls_deinit(&tlsContext);
 
-		  printf(" >> HTTP Response - Received len: %d\r\n", len);
-		  printf("======================================================\r\n");
-		  for(int i = 0; i < len; i++)
-			  printf("%c", g_recv_buf[i]);
-		  printf("\r\n");
-		  printf("======================================================\r\n");
-	  }
-	  HAL_Delay(2000);
+		ret = wiz_tls_init(&tlsContext, &server_fd);
+		wiz_tls_connect(&tlsContext, SERVER_PORT, gServer_IP);
+		}
+	}
   }
+//  while (1)
+//  {
+//    /* USER CODE END WHILE */
+//
+//    /* USER CODE BEGIN 3 */
+////	  httpc_connection_handler();
+////	  if(httpc_isSockOpen)
+////	  {
+////		  httpc_connect(&tlsContext);
+////	  }
+//	  // HTTP client example
+////	  httpc_connection_handler();
+//	  // Recv: HTTP response
+//	  httpc_connection_handler();
+//	  if(httpc_isConnected)
+//	  {
+//		  // Send: HTTP request
+//		  request.method = (uint8_t *)HTTP_GET;
+//		  request.uri = (uint8_t *)URI;
+//		  request.host = (uint8_t *)Domain_name;
+//
+//		  // HTTP client example #1: Function for send HTTP request (header and body fields are integrated)
+//		  {
+////			  httpc_connection_handler();
+//			  httpc_send(&tlsContext, &request, g_recv_buf, g_send_buf, 0);
+////			  if(wiz_tls_close_notify(&tlsContext) == 0)
+////			  		printf("SSL closed\r\n");
+////
+////			  	/*  Free tls context  */
+////			  	wiz_tls_deinit(&tlsContext);
+////			    ret = wiz_tls_init(&tlsContext, &server_fd);
+////			    httpc_connection_handler();
+////			    httpc_connect(&tlsContext);
+////			    httpc_connection_handler();
+//		  }
+//
+//		  // HTTP client example #2: Separate functions for HTTP request - default header + body
+//		  {
+//			  //httpc_send_header(&request, g_recv_buf, NULL, len);
+//			  //httpc_send_body(g_send_buf, len); // Send HTTP requset message body
+//		  }
+//
+//		  // HTTP client example #3: Separate functions for HTTP request with custom header fields - default header + custom header + body
+//		  {
+//			  //httpc_add_customHeader_field(tmpbuf, "Custom-Auth", "auth_method_string"); // custom header field extended - example #1
+//			  //httpc_add_customHeader_field(tmpbuf, "Key", "auth_key_string"); // custom header field extended - example #2
+//			  //httpc_send_header(&request, g_recv_buf, tmpbuf, len);
+//			  //httpc_send_body(g_send_buf, len);
+//		  }
+//		  flag_sent_http_request = ENABLE;
+//	  }
+////	  httpc_connection_handler();
+////	  if(httpc_isReceived > 0)
+////	  {
+////		  len = httpc_recv(&tlsContext, g_recv_buf, httpc_isReceived);
+////
+////		  printf(" >> HTTP Response - Received len: %d\r\n", len);
+////		  printf("======================================================\r\n");
+////		  for(int i = 0; i < len; i++)
+////			  printf("%c", g_recv_buf[i]);
+////		  printf("\r\n");
+////		  printf("======================================================\r\n");
+////	  }
+//	  HAL_Delay(2000);
+//  }
   /* USER CODE END 3 */
-}
+//}
 
 /**
   * @brief System Clock Configuration

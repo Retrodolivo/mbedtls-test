@@ -23,7 +23,7 @@
 #include <stdlib.h>
 
 
-#define DEBUG_LEVEL 2
+#define DEBUG_LEVEL 1
 
 #define DEBUG_BUFFER_SIZE	1024
 

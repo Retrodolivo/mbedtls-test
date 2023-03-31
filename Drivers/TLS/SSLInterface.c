@@ -19,8 +19,10 @@
 
 #define CERTIFICATE	self_signed_certificate
 
-unsigned char sslHostName[] = "mqtt.wiznet.io";
+unsigned char sslHostName[] = "stm32client";
+//unsigned char sslHostName[] = "mqtt.wiznet.io";
 //unsigned char sslHostName[] = "mqtt.example.net";
+
 
 unsigned char tempBuf[DEBUG_BUFFER_SIZE] = {0,};
 

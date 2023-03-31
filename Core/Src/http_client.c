@@ -312,7 +312,8 @@ uint16_t httpc_send(wiz_tls_context* tlsContext, HttpRequest * req, uint8_t * bu
 		for(i = 0; i < len; i++) printf("%c", buf[i]);
 		printf("\r\n");
 //#endif
-		wiz_tls_write(tlsContext, buf, len);//send(httpsock, buf, len);
+		wiz_tls_write(tlsContext, buf, len);
+		//send(httpsock, buf, len);
 	}
 	else
 	{
@@ -331,7 +332,8 @@ uint16_t httpc_recv(wiz_tls_context* tlsContext, uint8_t * buf, uint16_t len)
 	if(httpc_isConnected == HTTPC_TRUE)
 	{
 		if(len > DATA_BUF_SIZE) len = DATA_BUF_SIZE;
-		recvlen = wiz_tls_read(tlsContext, buf, len);//recv(httpsock, buf, len);
+		recvlen = wiz_tls_read(tlsContext, buf, len);
+		//recv(httpsock, buf, len);
 	}
 	else
 	{
